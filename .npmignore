@@ -1,0 +1,20 @@
+# Source files (dist/ is published instead)
+src/
+tests/
+
+# Config files
+.eslintrc.js
+.prettierrc
+tsconfig.json
+tsconfig.build.json
+jest.config.js
+
+# Development
+.git/
+.github/
+.claude/
+coverage/
+*.log
+
+# Documentation (keep README.md and LICENSE)
+PRD.md
