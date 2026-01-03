@@ -36,29 +36,41 @@ const gitUrlSchema = z.string().refine(
 
 /**
  * Repository configuration schema
+ * URL is required for remote repos, but optional for path: '.' (current directory)
  */
-export const RepositorySchema = z.object({
-  /** Repository name (used for display and default path) */
-  name: z.string().min(1, 'Repository name cannot be empty'),
+export const RepositorySchema = z
+  .object({
+    /** Repository name (used for display and default path) */
+    name: z.string().min(1, 'Repository name cannot be empty'),
 
-  /** Git URL (HTTPS or SSH) */
-  url: gitUrlSchema,
+    /** Git URL (HTTPS or SSH) - optional for path: '.' */
+    url: gitUrlSchema.optional(),
 
-  /** Local path relative to workspace root (defaults to ./repos/{name}) */
-  path: z.string().optional(),
+    /** Local path relative to workspace root (defaults to ./repos/{name}) */
+    path: z.string().optional(),
 
-  /** Access scope for this repository */
-  scope: ScopeSchema,
+    /** Access scope for this repository */
+    scope: ScopeSchema,
 
-  /** Branch to checkout (defaults to default branch) */
-  branch: z.string().optional(),
+    /** Branch to checkout (defaults to default branch) */
+    branch: z.string().optional(),
 
-  /** Notes about this repository (included in CONTEXT_MAP.md) */
-  notes: z.string().optional(),
+    /** Notes about this repository (included in CONTEXT_MAP.md) */
+    notes: z.string().optional(),
 
-  /** Shallow clone depth (positive integer) */
-  depth: z.number().int().positive().optional(),
-});
+    /** Shallow clone depth (positive integer) */
+    depth: z.number().int().positive().optional(),
+  })
+  .refine(
+    (repo) => {
+      // URL is required unless path is '.'
+      if (repo.path === '.') {
+        return true;
+      }
+      return repo.url !== undefined;
+    },
+    { message: 'URL is required for repositories (unless path is ".")' }
+  );
 
 /**
  * Root binder.yaml configuration schema

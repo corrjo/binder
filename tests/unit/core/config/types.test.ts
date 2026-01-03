@@ -83,6 +83,48 @@ describe('RepositorySchema', () => {
     const deepRepo = { ...validRepo, depth: 100 };
     expect(RepositorySchema.parse(deepRepo).depth).toBe(100);
   });
+
+  describe('path: "." (current directory)', () => {
+    it('should allow path "." without URL', () => {
+      const currentDirRepo = {
+        name: 'current',
+        path: '.',
+        scope: 'owner',
+      };
+      const result = RepositorySchema.parse(currentDirRepo);
+      expect(result.path).toBe('.');
+      expect(result.url).toBeUndefined();
+    });
+
+    it('should allow path "." with URL (URL is optional)', () => {
+      const currentDirRepo = {
+        name: 'current',
+        path: '.',
+        url: 'https://github.com/org/repo.git',
+        scope: 'owner',
+      };
+      const result = RepositorySchema.parse(currentDirRepo);
+      expect(result.path).toBe('.');
+      expect(result.url).toBe('https://github.com/org/repo.git');
+    });
+
+    it('should still require URL for other paths', () => {
+      const otherPathRepo = {
+        name: 'other',
+        path: './some/path',
+        scope: 'owner',
+      };
+      expect(() => RepositorySchema.parse(otherPathRepo)).toThrow(/URL is required/);
+    });
+
+    it('should still require URL when path is not specified', () => {
+      const noPathRepo = {
+        name: 'no-path',
+        scope: 'owner',
+      };
+      expect(() => RepositorySchema.parse(noPathRepo)).toThrow(/URL is required/);
+    });
+  });
 });
 
 describe('BinderConfigSchema', () => {
