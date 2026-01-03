@@ -124,26 +124,15 @@ npm run package
 
 ### Stable Releases
 
-Stable versions are published when a GitHub Release is created.
+Stable versions are automatically published when changes are merged to `main`. Version bumps are determined by commit messages using [Conventional Commits](https://www.conventionalcommits.org/).
 
-1. Update version in `package.json`:
-   ```bash
-   npm version patch  # 0.1.0 → 0.1.1
-   npm version minor  # 0.1.0 → 0.2.0
-   npm version major  # 0.1.0 → 1.0.0
-   ```
+Simply merge your PR to `main` and semantic-release will:
+1. Analyze commits to determine version bump
+2. Update `package.json` and `CHANGELOG.md`
+3. Create a GitHub Release
+4. Publish to GitHub Packages
 
-2. Push the version commit and tag:
-   ```bash
-   git push origin main --tags
-   ```
-
-3. Create a GitHub Release from the tag (via UI or CLI):
-   ```bash
-   gh release create v0.1.1 --generate-notes
-   ```
-
-4. The `publish.yml` workflow automatically publishes to GitHub Packages
+**No manual version bumping required!**
 
 ### Prerelease Versions
 
@@ -201,14 +190,36 @@ npm install -g @corrjo/binder-cli@0.1.0
 - **ESLint** for linting
 - **Jest** for testing
 
-### Commit Messages
+### Commit Messages (Conventional Commits)
 
-Use clear, descriptive commit messages:
+We use [Conventional Commits](https://www.conventionalcommits.org/) for automatic versioning:
 
+| Type | Description | Version Bump |
+|------|-------------|--------------|
+| `fix:` | Bug fix | PATCH (0.0.x) |
+| `feat:` | New feature | MINOR (0.x.0) |
+| `feat!:` | Breaking change | MAJOR (x.0.0) |
+| `docs:` | Documentation only | No release |
+| `chore:` | Maintenance | No release |
+| `refactor:` | Code refactoring | No release |
+| `test:` | Adding tests | No release |
+
+**Examples:**
 ```
-Add context command for generating CONTEXT_MAP.md
-Fix branch checkout when repo is dirty
-Update README with installation instructions
+fix: handle dirty repo error correctly
+feat: add dry-run mode to pull command
+feat!: rename binder.yaml to workspace.yaml
+docs: update README with examples
+chore: update dependencies
+refactor: simplify orchestrator logic
+test: add integration tests for status command
+```
+
+**Breaking changes** can also use a footer:
+```
+feat: change config format
+
+BREAKING CHANGE: repos field renamed to repositories
 ```
 
 ## Project Structure
