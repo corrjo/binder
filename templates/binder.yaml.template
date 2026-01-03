@@ -1,0 +1,52 @@
+# ============================================================================
+# Binder Configuration
+# ============================================================================
+# This file defines your workspace topology and repository scopes.
+# Run 'binder pull' to clone/checkout repositories.
+# Run 'binder context' to generate CONTEXT_MAP.md for AI agents.
+# Run 'binder status' to see workspace state.
+# ============================================================================
+
+# Workspace name (used in CONTEXT_MAP.md header)
+name: my-workspace
+
+# Repository definitions
+# Each repo defines a git repository and its scope in this workspace
+repos:
+  # --------------------------------------------------------------------------
+  # OWNER SCOPE - Full Authority
+  # --------------------------------------------------------------------------
+  # Repositories you own and have full control over.
+  # AI agents can read, write, refactor, and restructure freely.
+  #
+  - name: my-service
+    url: git@github.com:org/my-service.git
+    # path: ./services/my-service   # Optional: local path (defaults to ./repos/{name})
+    scope: owner
+    # branch: main                  # Optional: branch to checkout
+    # notes: "Core service"         # Optional: context for AI agents
+
+  # --------------------------------------------------------------------------
+  # PLATFORM SCOPE - Restricted Contributor
+  # --------------------------------------------------------------------------
+  # Repositories where you are a guest contributor.
+  # AI agents should only make minimal changes when necessary to support
+  # the owner scope. Must follow existing patterns strictly.
+  #
+  # - name: shared-platform
+  #   url: https://github.com/org/platform.git
+  #   scope: platform
+  #   notes: "Shared infrastructure - minimal changes only"
+
+  # --------------------------------------------------------------------------
+  # REFERENCE SCOPE - Read Only
+  # --------------------------------------------------------------------------
+  # Repositories used for reference and validation only.
+  # AI agents must NOT suggest modifications to these repos.
+  # Useful for documentation, legacy code, or external dependencies.
+  #
+  # - name: legacy-api
+  #   url: git@github.com:org/legacy-api.git
+  #   scope: reference
+  #   depth: 1                      # Optional: shallow clone
+  #   notes: "Reference only - historical context"
