@@ -120,7 +120,9 @@ export function generateContextMap(config: BinderConfig): string {
   lines.push(`**Workspace:** ${config.name}`);
   lines.push(`**Generated:** ${timestamp}`);
   lines.push('');
-  lines.push('You are operating in a multi-repository workspace. Use this map to understand your permissions and boundaries.');
+  lines.push(
+    'You are operating in a multi-repository workspace. Use this map to understand your permissions and boundaries.'
+  );
   lines.push('');
   lines.push('---');
   lines.push('');

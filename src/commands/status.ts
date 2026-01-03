@@ -1,8 +1,50 @@
 import chalk from 'chalk';
 import { loadConfig, ConfigError } from '../core/config/parser';
-import { getWorkspaceStatus } from '../core/workspace/status';
+import { getWorkspaceStatus, RepoStatusInfo } from '../core/workspace/status';
 import { error, info, newline, header, formatScope } from '../utils/logger';
 import type { Scope } from '../core/config/types';
+
+type RepoState = 'missing' | 'not-git' | 'dirty' | 'branch-mismatch' | 'ok';
+
+interface StatusDisplay {
+  icon: string;
+  text: string;
+}
+
+function getRepoState(repo: RepoStatusInfo): RepoState {
+  if (!repo.exists) return 'missing';
+  if (!repo.isGitRepo) return 'not-git';
+  if (repo.isDirty) return 'dirty';
+  if (repo.branchMismatch) return 'branch-mismatch';
+  return 'ok';
+}
+
+function getStatusDisplay(repo: RepoStatusInfo): StatusDisplay {
+  const displays: Record<RepoState, () => StatusDisplay> = {
+    missing: () => ({
+      icon: chalk.red('✗'),
+      text: chalk.red('missing'),
+    }),
+    'not-git': () => ({
+      icon: chalk.yellow('?'),
+      text: chalk.yellow('not a git repo'),
+    }),
+    dirty: () => ({
+      icon: chalk.yellow('●'),
+      text: chalk.yellow('dirty'),
+    }),
+    'branch-mismatch': () => ({
+      icon: chalk.yellow('⇄'),
+      text: chalk.yellow(`on ${repo.currentBranch}, expected ${repo.expectedBranch}`),
+    }),
+    ok: () => ({
+      icon: chalk.green('✓'),
+      text: chalk.green(repo.currentBranch || 'ok'),
+    }),
+  };
+
+  return displays[getRepoState(repo)]();
+}
 
 /**
  * Display workspace status
@@ -46,27 +88,8 @@ export async function statusCommand(): Promise<void> {
 
     console.log(formatScope(scope).toUpperCase());
     for (const repo of repos) {
-      let statusIcon: string;
-      let statusText: string;
-
-      if (!repo.exists) {
-        statusIcon = chalk.red('✗');
-        statusText = chalk.red('missing');
-      } else if (!repo.isGitRepo) {
-        statusIcon = chalk.yellow('?');
-        statusText = chalk.yellow('not a git repo');
-      } else if (repo.isDirty) {
-        statusIcon = chalk.yellow('●');
-        statusText = chalk.yellow('dirty');
-      } else if (repo.branchMismatch) {
-        statusIcon = chalk.yellow('⇄');
-        statusText = chalk.yellow(`on ${repo.currentBranch}, expected ${repo.expectedBranch}`);
-      } else {
-        statusIcon = chalk.green('✓');
-        statusText = chalk.green(repo.currentBranch || 'ok');
-      }
-
-      console.log(`  ${statusIcon} ${repo.name} ${chalk.dim(`(${statusText})`)}`);
+      const { icon, text } = getStatusDisplay(repo);
+      console.log(`  ${icon} ${repo.name} ${chalk.dim(`(${text})`)}`);
     }
     newline();
   }

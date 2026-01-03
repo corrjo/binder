@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
+import * as fs from 'fs';
+import * as path from 'path';
 import { initCommand } from './commands/init';
 import { pullCommand } from './commands/pull';
 import { contextCommand } from './commands/context';
@@ -8,8 +10,8 @@ import { statusCommand } from './commands/status';
 import { setVerbose } from './utils/logger';
 
 // Read version from package.json
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const packageJson = require('../package.json') as { version: string };
+const packageJsonPath = path.join(__dirname, '../package.json');
+const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8')) as { version: string };
 
 const program = new Command();
 

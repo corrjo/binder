@@ -56,10 +56,7 @@ function getRepoPath(repo: Repository, basePath: string): string {
 /**
  * Get status for a single repository
  */
-async function getRepoStatusInfo(
-  repo: Repository,
-  basePath: string
-): Promise<RepoStatusInfo> {
+async function getRepoStatusInfo(repo: Repository, basePath: string): Promise<RepoStatusInfo> {
   const repoPath = getRepoPath(repo, basePath);
 
   const pathExists = await exists(repoPath);
@@ -102,25 +99,20 @@ async function getRepoStatusInfo(
 /**
  * Find directories that look like repos but aren't in the config
  */
-async function findOrphanedRepos(
-  config: BinderConfig,
-  basePath: string
-): Promise<OrphanedRepo[]> {
+async function findOrphanedRepos(config: BinderConfig, basePath: string): Promise<OrphanedRepo[]> {
   const orphaned: OrphanedRepo[] = [];
 
   // Get all configured repo paths
-  const configuredPaths = new Set(
-    config.repos.map((repo) => getRepoPath(repo, basePath))
-  );
+  const configuredPaths = new Set(config.repos.map((repo) => getRepoPath(repo, basePath)));
 
   // Check the default repos directory
   const reposDir = resolvePath('./repos', basePath);
-  if (await exists(reposDir) && await isDirectory(reposDir)) {
+  if ((await exists(reposDir)) && (await isDirectory(reposDir))) {
     const dirs = await listDirectories(reposDir);
 
     for (const dir of dirs) {
       const fullPath = path.join(reposDir, dir);
-      if (await isGitRepo(fullPath) && !configuredPaths.has(fullPath)) {
+      if ((await isGitRepo(fullPath)) && !configuredPaths.has(fullPath)) {
         orphaned.push({
           name: dir,
           path: fullPath,

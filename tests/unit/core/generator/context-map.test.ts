@@ -35,9 +35,7 @@ describe('generateContextMap', () => {
   it('should include PLATFORM scope section with yellow emoji', () => {
     const config: BinderConfig = {
       name: 'test',
-      repos: [
-        { name: 'platform', url: 'https://github.com/test', scope: 'platform' },
-      ],
+      repos: [{ name: 'platform', url: 'https://github.com/test', scope: 'platform' }],
     };
     const result = generateContextMap(config);
     expect(result).toContain('🟡');
@@ -48,9 +46,7 @@ describe('generateContextMap', () => {
   it('should include REFERENCE scope section with red emoji', () => {
     const config: BinderConfig = {
       name: 'test',
-      repos: [
-        { name: 'docs', url: 'https://github.com/test', scope: 'reference' },
-      ],
+      repos: [{ name: 'docs', url: 'https://github.com/test', scope: 'reference' }],
     };
     const result = generateContextMap(config);
     expect(result).toContain('🔴');
@@ -62,9 +58,24 @@ describe('generateContextMap', () => {
     const config: BinderConfig = {
       name: 'multi-scope',
       repos: [
-        { name: 'owned-service', url: 'https://github.com/org/owned.git', scope: 'owner', path: './owned' },
-        { name: 'platform-lib', url: 'https://github.com/org/platform.git', scope: 'platform', path: './platform' },
-        { name: 'reference-docs', url: 'https://github.com/org/docs.git', scope: 'reference', path: './docs' },
+        {
+          name: 'owned-service',
+          url: 'https://github.com/org/owned.git',
+          scope: 'owner',
+          path: './owned',
+        },
+        {
+          name: 'platform-lib',
+          url: 'https://github.com/org/platform.git',
+          scope: 'platform',
+          path: './platform',
+        },
+        {
+          name: 'reference-docs',
+          url: 'https://github.com/org/docs.git',
+          scope: 'reference',
+          path: './docs',
+        },
       ],
     };
     const result = generateContextMap(config);
@@ -95,9 +106,7 @@ describe('generateContextMap', () => {
   it('should use default path when path not specified', () => {
     const config: BinderConfig = {
       name: 'test',
-      repos: [
-        { name: 'my-repo', url: 'https://github.com/test', scope: 'owner' },
-      ],
+      repos: [{ name: 'my-repo', url: 'https://github.com/test', scope: 'owner' }],
     };
     const result = generateContextMap(config);
     expect(result).toContain('./repos/my-repo');
@@ -106,9 +115,7 @@ describe('generateContextMap', () => {
   it('should only include sections for scopes that have repos', () => {
     const ownerOnly: BinderConfig = {
       name: 'test',
-      repos: [
-        { name: 'owned', url: 'https://github.com/test', scope: 'owner' },
-      ],
+      repos: [{ name: 'owned', url: 'https://github.com/test', scope: 'owner' }],
     };
     const result = generateContextMap(ownerOnly);
     expect(result).toContain('🟢');
