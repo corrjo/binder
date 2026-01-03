@@ -45,4 +45,8 @@ jobs:
           npm version "$PRERELEASE_VERSION" --no-git-tag-version
 
       - name: Publish prerelease to npm
-        run: npm publish --provenance --tag next
+        run: |
+          # Remove .npmrc to allow pure OIDC auth
+          rm -f ~/.npmrc
+          rm -f .npmrc
+          npm publish --provenance --tag next
