@@ -73,7 +73,8 @@ export async function getRepoStatus(repoPath: string): Promise<RepoStatus> {
       hasStaged,
     };
   } catch (error) {
-    debug(`Error getting status for ${repoPath}: ${error}`);
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    debug(`Error getting status for ${repoPath}: ${message}`);
     return {
       exists: true,
       isDirty: false,

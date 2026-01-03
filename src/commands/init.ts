@@ -23,7 +23,7 @@ export async function initCommand(): Promise<void> {
 
   try {
     template = await fs.readFile(templatePath, 'utf-8');
-  } catch (err) {
+  } catch {
     // Fallback if template file is not found (e.g., in development)
     template = getDefaultTemplate();
   }
