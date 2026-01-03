@@ -31,28 +31,48 @@ program
   .command('init')
   .description('Create a new binder.yaml configuration file')
   .action(async () => {
-    await initCommand();
+    try {
+      await initCommand();
+    } catch (error) {
+      console.error('Unexpected error while running "init" command:', error);
+      process.exitCode = 1;
+    }
   });
 
 program
   .command('pull')
   .description('Clone missing repositories and checkout configured branches')
   .action(async () => {
-    await pullCommand();
+    try {
+      await pullCommand();
+    } catch (error) {
+      console.error('Unexpected error while running "pull" command:', error);
+      process.exitCode = 1;
+    }
   });
 
 program
   .command('context')
   .description('Generate CONTEXT_MAP.md for AI agents')
   .action(async () => {
-    await contextCommand();
+    try {
+      await contextCommand();
+    } catch (error) {
+      console.error('Unexpected error while running "context" command:', error);
+      process.exitCode = 1;
+    }
   });
 
 program
   .command('status')
   .description('Show workspace status (repos, branches, dirty state)')
   .action(async () => {
-    await statusCommand();
+    try {
+      await statusCommand();
+    } catch (error) {
+      console.error('Unexpected error while running "status" command:', error);
+      process.exitCode = 1;
+    }
   });
 
 // Parse arguments
