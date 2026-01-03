@@ -124,7 +124,7 @@ Simply merge your PR to `main` and semantic-release will:
 1. Analyze commits to determine version bump
 2. Update `package.json` and `CHANGELOG.md`
 3. Create a GitHub Release
-4. Publish to GitHub Packages
+4. Publish to npm
 
 **No manual version bumping required!**
 
@@ -149,33 +149,23 @@ Prereleases are automatically published when pushing to `prerelease/*` branches.
 
 4. Install the prerelease:
    ```bash
-   npm install -g @corrjo/binder-cli@next
+   npm install -g binder-cli@next
    ```
 
-## Installing from GitHub Packages
-
-### Authentication
-
-Users need to authenticate with GitHub Packages once:
-
-```bash
-# Create a Personal Access Token (PAT) with `read:packages` scope
-# Then login:
-npm login --registry=https://npm.pkg.github.com --scope=@corrjo
-```
-
-### Installation
+## Installing from npm
 
 ```bash
 # Latest stable release
-npm install -g @corrjo/binder-cli
+npm install -g binder-cli
 
 # Latest prerelease
-npm install -g @corrjo/binder-cli@next
+npm install -g binder-cli@next
 
 # Specific version
-npm install -g @corrjo/binder-cli@0.1.0
+npm install -g binder-cli@1.1.0
 ```
+
+No authentication required - the package is public on npm.
 
 ## Code Style
 
