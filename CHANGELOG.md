@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/corrjo/binder/compare/v1.0.0...v1.1.0) (2026-01-03)
+
+
+### Bug Fixes
+
+* add tests ([ea13a2b](https://github.com/corrjo/binder/commit/ea13a2b7b77eb251952843c7efac2862aa1a6715))
+
+
+### Features
+
+* add instructions to use context_map to ai rules file ([f5f4ec1](https://github.com/corrjo/binder/commit/f5f4ec1550f5816cb7a1b45c882883c26dc1070d))
+
 # 1.0.0 (2026-01-03)
 
 
