@@ -1,3 +1,16 @@
+# [1.2.0](https://github.com/corrjo/binder/compare/v1.1.0...v1.2.0) (2026-01-03)
+
+
+### Bug Fixes
+
+* use trusted publisher ([339e92d](https://github.com/corrjo/binder/commit/339e92d5db9541287f2098a86a91448e31573da6))
+* use trusted publisher ([2404fb1](https://github.com/corrjo/binder/commit/2404fb13f069ec8b5ccaefe7853eec50cfba0073))
+
+
+### Features
+
+* update for release to npm ([56af758](https://github.com/corrjo/binder/commit/56af7589e199206e7652b2763bc4d9a0559e7303))
+
 # [1.1.0](https://github.com/corrjo/binder/compare/v1.0.0...v1.1.0) (2026-01-03)
 
 
