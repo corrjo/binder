@@ -1,6 +1,6 @@
 {
   "name": "binder-cli",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Orchestrate Virtual Monoliths from distributed repositories and define semantic boundaries for AI agents",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

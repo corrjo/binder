@@ -1,3 +1,10 @@
+## [1.2.5](https://github.com/corrjo/binder/compare/v1.2.4...v1.2.5) (2026-01-03)
+
+
+### Bug Fixes
+
+* update npm ([8397b7e](https://github.com/corrjo/binder/commit/8397b7ef0bbb2a991567dc29574f896c78ee99e2))
+
 ## [1.2.4](https://github.com/corrjo/binder/compare/v1.2.3...v1.2.4) (2026-01-03)
 
 
