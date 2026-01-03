@@ -51,17 +51,35 @@ program
     }
   });
 
+// Helper to collect multiple --file options into an array
+function collect(value: string, previous: string[]): string[] {
+  return previous.concat([value]);
+}
+
 program
   .command('context')
   .description('Generate CONTEXT_MAP.md for AI agents')
-  .action(async () => {
-    try {
-      await contextCommand();
-    } catch (error) {
-      console.error('Unexpected error while running "context" command:', error);
-      process.exitCode = 1;
+  .option('--claude', 'Inject instructions into CLAUDE.md')
+  .option('--cursor', 'Inject instructions into .cursorrules')
+  .option('--roo', 'Inject instructions into .roo/rules.md')
+  .option('--agents', 'Inject instructions into agents.md')
+  .option('--file <path>', 'Inject into a custom file (can be used multiple times)', collect, [])
+  .action(
+    async (options: {
+      claude?: boolean;
+      cursor?: boolean;
+      roo?: boolean;
+      agents?: boolean;
+      file?: string[];
+    }) => {
+      try {
+        await contextCommand(options);
+      } catch (error) {
+        console.error('Unexpected error while running "context" command:', error);
+        process.exitCode = 1;
+      }
     }
-  });
+  );
 
 program
   .command('status')

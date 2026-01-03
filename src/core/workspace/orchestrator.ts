@@ -36,6 +36,13 @@ function getRepoPath(repo: Repository, basePath: string): string {
 }
 
 /**
+ * Check if this repo references the current directory
+ */
+function isCurrentDirectoryRepo(repo: Repository): boolean {
+  return repo.path === '.';
+}
+
+/**
  * Orchestrate a single repository
  */
 async function orchestrateRepo(
@@ -51,6 +58,35 @@ async function orchestrateRepo(
   };
 
   try {
+    // Handle current directory repos (path: '.')
+    if (isCurrentDirectoryRepo(repo)) {
+      const repoExists = await isGitRepo(repoPath);
+      if (!repoExists) {
+        result.action = 'error';
+        result.error = 'Current directory is not a git repository';
+        return result;
+      }
+
+      // Handle branch checkout if specified
+      if (repo.branch) {
+        const currentBranch = await getCurrentBranch(repoPath);
+        if (currentBranch !== repo.branch) {
+          spin.text = `Checking out ${repo.branch} for ${repo.name}...`;
+          debug(`Switching ${repo.name} from ${currentBranch} to ${repo.branch}`);
+
+          await checkoutBranch(repoPath, repo.branch, repo.name);
+          result.action = 'checkout';
+          result.branch = repo.branch;
+          return result;
+        }
+      }
+
+      result.branch = (await getCurrentBranch(repoPath)) ?? undefined;
+      result.action = 'skipped';
+      return result;
+    }
+
+    // Handle remote repos
     const repoExists = await isGitRepo(repoPath);
 
     if (!repoExists) {
@@ -58,7 +94,7 @@ async function orchestrateRepo(
       spin.text = `Cloning ${repo.name}...`;
       debug(`Cloning ${repo.url} to ${repoPath}`);
 
-      await cloneRepository(repo.url, repoPath, {
+      await cloneRepository(repo.url!, repoPath, {
         depth: repo.depth,
         branch: repo.branch,
       });
