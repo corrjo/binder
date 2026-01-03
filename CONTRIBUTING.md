@@ -63,17 +63,11 @@ npm run test:coverage
 ### Code Quality
 
 ```bash
-# Lint code
+# Check linting and formatting
 npm run lint
 
-# Fix lint issues
+# Fix linting and formatting issues
 npm run lint:fix
-
-# Check formatting
-npm run format:check
-
-# Format code
-npm run format
 ```
 
 ### Building

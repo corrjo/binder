@@ -160,6 +160,9 @@ npm run dev -- init
 # Run tests
 npm test
 
+# Lint and format
+npm run lint:fix
+
 # Build
 npm run build
 

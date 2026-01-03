@@ -325,33 +325,27 @@ describe('Git Operations', () => {
       mockClone.mockResolvedValue(undefined);
 
       await cloneRepository('https://github.com/org/repo.git', '/dest/path');
-      expect(mockClone).toHaveBeenCalledWith(
-        'https://github.com/org/repo.git',
-        '/dest/path',
-        []
-      );
+      expect(mockClone).toHaveBeenCalledWith('https://github.com/org/repo.git', '/dest/path', []);
     });
 
     it('should pass depth option for shallow clone', async () => {
       mockClone.mockResolvedValue(undefined);
 
       await cloneRepository('https://github.com/org/repo.git', '/dest', { depth: 1 });
-      expect(mockClone).toHaveBeenCalledWith(
-        'https://github.com/org/repo.git',
-        '/dest',
-        ['--depth', '1']
-      );
+      expect(mockClone).toHaveBeenCalledWith('https://github.com/org/repo.git', '/dest', [
+        '--depth',
+        '1',
+      ]);
     });
 
     it('should pass branch option', async () => {
       mockClone.mockResolvedValue(undefined);
 
       await cloneRepository('https://github.com/org/repo.git', '/dest', { branch: 'develop' });
-      expect(mockClone).toHaveBeenCalledWith(
-        'https://github.com/org/repo.git',
-        '/dest',
-        ['--branch', 'develop']
-      );
+      expect(mockClone).toHaveBeenCalledWith('https://github.com/org/repo.git', '/dest', [
+        '--branch',
+        'develop',
+      ]);
     });
 
     it('should pass both depth and branch options', async () => {
@@ -361,11 +355,12 @@ describe('Git Operations', () => {
         depth: 1,
         branch: 'main',
       });
-      expect(mockClone).toHaveBeenCalledWith(
-        'https://github.com/org/repo.git',
-        '/dest',
-        ['--depth', '1', '--branch', 'main']
-      );
+      expect(mockClone).toHaveBeenCalledWith('https://github.com/org/repo.git', '/dest', [
+        '--depth',
+        '1',
+        '--branch',
+        'main',
+      ]);
     });
 
     it('should throw CloneError on failure', async () => {

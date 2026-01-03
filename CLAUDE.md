@@ -11,8 +11,8 @@ npm run binder -- <cmd> # Run compiled CLI: npm run binder -- status
 npm test               # Run all tests
 npm test -- --testPathPattern="parser"  # Run single test file
 npm run test:watch     # Watch mode
-npm run lint           # ESLint
-npm run format         # Prettier write
+npm run lint           # ESLint + Prettier check
+npm run lint:fix       # ESLint + Prettier fix
 npm run package        # Build + create .tgz
 ```
 
@@ -47,7 +47,26 @@ Binder is a CLI tool that manages multi-repo workspaces with scoped permissions 
 
 ### Testing
 
-Tests live in `tests/unit/` mirroring `src/` structure. Core modules have TDD-style tests; commands are tested via integration.
+Tests live in `tests/unit/` mirroring `src/` structure. Core modules have TDD-style tests; commands are tested via integration. Use mocks for external dependencies (e.g., `simple-git`, `fs-extra`) to keep tests fast and CI-friendly.
+
+### Code Quality
+
+Run before committing:
+
+```bash
+npm run lint:fix       # Fix ESLint + Prettier issues
+npm test               # Ensure all tests pass
+```
+
+CI runs `npm run lint`, so issues will fail the build.
+
+### Documentation
+
+When changing commands, scripts, or workflows, update these files:
+- `CLAUDE.md` - Build & Development Commands section
+- `README.md` - Development section
+- `CONTRIBUTING.md` - Setup and Code Quality sections
+- `.github/workflows/ci.yml` - CI steps
 
 ## Scopes
 
