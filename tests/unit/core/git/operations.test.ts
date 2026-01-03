@@ -174,7 +174,10 @@ describe('Git Operations', () => {
     it('should throw CloneError for invalid URL', async () => {
       const destPath = path.join(tmpDir, 'clone-dest');
       await expect(
-        cloneRepository('https://github.com/nonexistent-org-12345/nonexistent-repo-67890.git', destPath)
+        cloneRepository(
+          'https://github.com/nonexistent-org-12345/nonexistent-repo-67890.git',
+          destPath
+        )
       ).rejects.toThrow(CloneError);
     });
 

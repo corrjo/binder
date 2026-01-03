@@ -60,9 +60,7 @@ export async function getRepoStatus(repoPath: string): Promise<RepoStatus> {
     const hasUntracked = status.not_added.length > 0;
     const hasModified = status.modified.length > 0 || status.deleted.length > 0;
     const hasStaged =
-      status.staged.length > 0 ||
-      status.created.length > 0 ||
-      status.renamed.length > 0;
+      status.staged.length > 0 || status.created.length > 0 || status.renamed.length > 0;
 
     return {
       exists: true,
@@ -211,9 +209,7 @@ export async function branchExists(repoPath: string, branchName: string): Promis
     const allBranches = [...branches.all];
     return allBranches.some(
       (b) =>
-        b === branchName ||
-        b === `remotes/origin/${branchName}` ||
-        b === `origin/${branchName}`
+        b === branchName || b === `remotes/origin/${branchName}` || b === `origin/${branchName}`
     );
   } catch {
     return false;

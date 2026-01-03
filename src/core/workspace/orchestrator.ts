@@ -1,10 +1,5 @@
 import type { BinderConfig, Repository } from '../config/types';
-import {
-  isGitRepo,
-  cloneRepository,
-  checkoutBranch,
-  getCurrentBranch,
-} from '../git/operations';
+import { isGitRepo, cloneRepository, checkoutBranch, getCurrentBranch } from '../git/operations';
 import { resolvePath, getDefaultRepoPath } from '../../utils/filesystem';
 import { success, error, debug, spinner } from '../../utils/logger';
 import type { Ora } from 'ora';
