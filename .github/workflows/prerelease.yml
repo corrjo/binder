@@ -1,0 +1,51 @@
+name: Publish Prerelease
+
+on:
+  push:
+    branches:
+      - 'prerelease/**'
+
+jobs:
+  prerelease:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@corrjo'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Set prerelease version
+        run: |
+          # Get base version from package.json
+          BASE_VERSION=$(node -p "require('./package.json').version")
+
+          # Create prerelease version: 0.1.0-pre.20240102.abc1234
+          DATE=$(date +%Y%m%d)
+          SHORT_SHA=${GITHUB_SHA::7}
+          PRERELEASE_VERSION="${BASE_VERSION}-pre.${DATE}.${SHORT_SHA}"
+
+          echo "Publishing version: $PRERELEASE_VERSION"
+          npm version "$PRERELEASE_VERSION" --no-git-tag-version
+
+      - name: Publish prerelease to GitHub Packages
+        run: npm publish --tag next
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
