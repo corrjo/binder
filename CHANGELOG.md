@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/corrjo/binder/compare/v1.2.2...v1.2.3) (2026-01-03)
+
+
+### Bug Fixes
+
+* remove registry-url from setup-node for OIDC auth ([78c2e69](https://github.com/corrjo/binder/commit/78c2e697b0f1ce0859b8605f2b05b1a39c3d7b36))
+
 ## [1.2.2](https://github.com/corrjo/binder/compare/v1.2.1...v1.2.2) (2026-01-03)
 
 
