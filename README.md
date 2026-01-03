@@ -34,6 +34,25 @@ binder status
 
 ## Commands
 
+```
+❯ binder -h
+Usage: binder [options] [command]
+
+Orchestrate Virtual Monoliths from distributed repositories
+
+Options:
+  -V, --version      output the version number
+  -v, --verbose      Enable verbose output
+  -h, --help         display help for command
+
+Commands:
+  init               Create a new binder.yaml configuration file
+  pull               Clone missing repositories and checkout configured branches
+  context [options]  Generate CONTEXT_MAP.md for AI agents
+  status             Show workspace status (repos, branches, dirty state)
+  help [command]     display help for command
+```
+
 ### `binder init`
 
 Creates a new `binder.yaml` configuration file with a commented template.
