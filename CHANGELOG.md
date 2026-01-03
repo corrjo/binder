@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/corrjo/binder/compare/v1.2.1...v1.2.2) (2026-01-03)
+
+
+### Bug Fixes
+
+* fix workflow ([1deacd9](https://github.com/corrjo/binder/commit/1deacd9639b4c05cd13291c3b839c853f82f4ae3))
+
 ## [1.2.1](https://github.com/corrjo/binder/compare/v1.2.0...v1.2.1) (2026-01-03)
 
 
