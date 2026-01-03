@@ -144,7 +144,7 @@ Prereleases are automatically published when pushing to `prerelease/*` branches.
 
 3. The `prerelease.yml` workflow automatically:
    - Runs tests
-   - Generates version: `0.1.0-pre.20260102.abc1234`
+   - Generates version: `0.1.0-pre.YYYYMMDD.abc1234`
    - Publishes with `@next` tag
 
 4. Install the prerelease:
