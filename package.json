@@ -1,5 +1,5 @@
 {
-  "name": "@corrjo/binder-cli",
+  "name": "binder-cli",
   "version": "1.1.0",
   "description": "Orchestrate Virtual Monoliths from distributed repositories and define semantic boundaries for AI agents",
   "main": "dist/index.js",
@@ -44,7 +44,8 @@
     "url": "https://github.com/corrjo/binder.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
   },
   "engines": {
     "node": ">=18.0.0"
