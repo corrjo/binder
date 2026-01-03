@@ -2,6 +2,8 @@
 
 A lightweight CLI tool to orchestrate "Virtual Monoliths" from distributed repositories and define semantic boundaries for AI agents.
 
+**[Read the docs →](https://corrjo.github.io/binder-website/)**
+
 ## What is Binder?
 
 Binder helps you work across multiple repositories by defining clear scopes and permissions for AI-assisted development. Instead of manually managing repo clones and context, define your workspace topology once and let Binder handle the rest.
