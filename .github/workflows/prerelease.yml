@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      id-token: write
 
     steps:
       - name: Checkout code
@@ -44,6 +45,4 @@ jobs:
           npm version "$PRERELEASE_VERSION" --no-git-tag-version
 
       - name: Publish prerelease to npm
-        run: npm publish --tag next
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --provenance --tag next
