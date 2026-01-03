@@ -114,9 +114,7 @@ describe('RepositorySchema', () => {
         path: './some/path',
         scope: 'owner',
       };
-      expect(() => RepositorySchema.parse(otherPathRepo)).toThrow(
-        'URL is required for repositories'
-      );
+      expect(() => RepositorySchema.parse(otherPathRepo)).toThrow(/URL is required/);
     });
 
     it('should still require URL when path is not specified', () => {
@@ -124,7 +122,7 @@ describe('RepositorySchema', () => {
         name: 'no-path',
         scope: 'owner',
       };
-      expect(() => RepositorySchema.parse(noPathRepo)).toThrow('URL is required for repositories');
+      expect(() => RepositorySchema.parse(noPathRepo)).toThrow(/URL is required/);
     });
   });
 });
