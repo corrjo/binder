@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/corrjo/binder/compare/v1.2.0...v1.2.1) (2026-01-03)
+
+
+### Bug Fixes
+
+* add help to readme ([861ab1b](https://github.com/corrjo/binder/commit/861ab1bbcba23f8b0ac5117818abe51d711e647c))
+
 # [1.2.0](https://github.com/corrjo/binder/compare/v1.1.0...v1.2.0) (2026-01-03)
 
 
