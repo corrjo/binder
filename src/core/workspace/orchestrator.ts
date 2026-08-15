@@ -1,5 +1,11 @@
 import type { BinderConfig, Repository } from '../config/types';
-import { isGitRepo, cloneRepository, checkoutBranch, getCurrentBranch } from '../git/operations';
+import {
+  isGitRepo,
+  cloneRepository,
+  checkoutBranch,
+  getCurrentBranch,
+  pullUpdates,
+} from '../git/operations';
 import { resolvePath, getDefaultRepoPath } from '../../utils/filesystem';
 import { success, error, debug, spinner } from '../../utils/logger';
 import type { Ora } from 'ora';
@@ -77,12 +83,18 @@ async function orchestrateRepo(
           await checkoutBranch(repoPath, repo.branch, repo.name);
           result.action = 'checkout';
           result.branch = repo.branch;
-          return result;
         }
       }
 
-      result.branch = (await getCurrentBranch(repoPath)) ?? undefined;
-      result.action = 'skipped';
+      // Keep existing repositories synchronized with their remote. pullUpdates
+      // checks for uncommitted changes before attempting the pull.
+      spin.text = `Pulling updates for ${repo.name}...`;
+      await pullUpdates(repoPath, repo.name);
+
+      if (result.action !== 'checkout') {
+        result.branch = (await getCurrentBranch(repoPath)) ?? undefined;
+        result.action = 'skipped';
+      }
       return result;
     }
 
@@ -115,12 +127,17 @@ async function orchestrateRepo(
         await checkoutBranch(repoPath, repo.branch, repo.name);
         result.action = 'checkout';
         result.branch = repo.branch;
-        return result;
       }
     }
 
-    // Already on correct branch (or no branch specified)
-    result.branch = (await getCurrentBranch(repoPath)) ?? undefined;
+    // Already on the correct branch (or no branch specified). Pulling also
+    // validates that the repository has no uncommitted changes.
+    spin.text = `Pulling updates for ${repo.name}...`;
+    await pullUpdates(repoPath, repo.name);
+
+    if (result.action !== 'checkout') {
+      result.branch = (await getCurrentBranch(repoPath)) ?? undefined;
+    }
     return result;
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';

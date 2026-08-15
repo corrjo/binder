@@ -41,7 +41,7 @@ program
 
 program
   .command('pull')
-  .description('Clone missing repositories and checkout configured branches')
+  .description('Clone missing repositories, pull updates, and checkout configured branches')
   .action(async () => {
     try {
       await pullCommand();

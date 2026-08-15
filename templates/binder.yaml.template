@@ -2,7 +2,7 @@
 # Binder Configuration
 # ============================================================================
 # This file defines your workspace topology and repository scopes.
-# Run 'binder pull' to clone/checkout repositories.
+# Run 'binder pull' to clone repositories and pull updates.
 # Run 'binder context' to generate CONTEXT_MAP.md for AI agents.
 # Run 'binder status' to see workspace state.
 # ============================================================================

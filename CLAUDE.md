@@ -31,7 +31,7 @@ Binder is a CLI tool that manages multi-repo workspaces with scoped permissions 
    - `status` - calls workspace status
 
 3. **Core Modules** (`src/core/`):
-   - `workspace/orchestrator.ts` - idempotent git clone/checkout logic
+   - `workspace/orchestrator.ts` - idempotent git clone/checkout/pull logic
    - `workspace/status.ts` - analyzes repo state vs config
    - `generator/context-map.ts` - produces `CONTEXT_MAP.md`
    - `git/operations.ts` - wraps `simple-git` library

@@ -43,6 +43,7 @@ npm run binder -- <command>
 
 # Examples
 npm run dev -- init
+npm run dev -- pull
 npm run dev -- status
 npm run binder -- --help
 ```
