@@ -35,7 +35,7 @@ export async function initCommand(): Promise<void> {
     info('');
     info('Next steps:');
     info('  1. Edit binder.yaml to add your repositories');
-    info('  2. Run `binder pull` to clone/checkout repositories');
+    info('  2. Run `binder pull` to clone repositories and pull updates');
     info('  3. Run `binder context` to generate CONTEXT_MAP.md');
     info('  4. Run `binder status` to see workspace state');
   } catch (err) {
@@ -53,7 +53,7 @@ function getDefaultTemplate(): string {
 # Binder Configuration
 # ============================================================================
 # This file defines your workspace topology and repository scopes.
-# Run 'binder pull' to clone/checkout repositories.
+# Run 'binder pull' to clone repositories and pull updates.
 # Run 'binder context' to generate CONTEXT_MAP.md for AI agents.
 # Run 'binder status' to see workspace state.
 # ============================================================================

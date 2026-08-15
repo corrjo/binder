@@ -33,7 +33,7 @@ export class GitError extends BinderError {
 export class DirtyRepositoryError extends BinderError {
   constructor(public readonly repoName: string) {
     super(
-      `Repository "${repoName}" has uncommitted changes. Commit or stash changes before switching branches.`,
+      `Repository "${repoName}" has uncommitted changes. Commit or stash changes before switching branches or pulling updates.`,
       'DIRTY_REPOSITORY'
     );
     this.name = 'DirtyRepositoryError';

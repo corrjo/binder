@@ -8,12 +8,14 @@ const mockIsGitRepo: MockFn = jest.fn();
 const mockCloneRepository: MockFn = jest.fn();
 const mockCheckoutBranch: MockFn = jest.fn();
 const mockGetCurrentBranch: MockFn = jest.fn();
+const mockPullUpdates: MockFn = jest.fn();
 
 jest.mock('../../../../src/core/git/operations', () => ({
   isGitRepo: (...args: unknown[]) => mockIsGitRepo(...args),
   cloneRepository: (...args: unknown[]) => mockCloneRepository(...args),
   checkoutBranch: (...args: unknown[]) => mockCheckoutBranch(...args),
   getCurrentBranch: (...args: unknown[]) => mockGetCurrentBranch(...args),
+  pullUpdates: (...args: unknown[]) => mockPullUpdates(...args),
 }));
 
 // Mock logger
@@ -61,8 +63,9 @@ describe('orchestrate', () => {
       expect(result.skipped).toBe(1);
       expect(result.cloned).toBe(0);
 
-      // Should NOT have called cloneRepository
+      // Should NOT have called cloneRepository, but should synchronize the repo.
       expect(mockCloneRepository).not.toHaveBeenCalled();
+      expect(mockPullUpdates).toHaveBeenCalledWith('/workspace', 'main-app');
     });
 
     it('should return error when current directory is not a git repo', async () => {
@@ -102,6 +105,7 @@ describe('orchestrate', () => {
       expect(result.checkedOut).toBe(1);
 
       expect(mockCheckoutBranch).toHaveBeenCalledWith('/workspace', 'develop', 'main-app');
+      expect(mockPullUpdates).toHaveBeenCalledWith('/workspace', 'main-app');
     });
 
     it('should skip checkout for path "." when already on correct branch', async () => {
@@ -126,8 +130,9 @@ describe('orchestrate', () => {
       expect(result.repos[0].action).toBe('skipped');
       expect(result.repos[0].branch).toBe('main');
 
-      // Should NOT have called checkoutBranch
+      // Should NOT have called checkoutBranch, but should pull remote updates.
       expect(mockCheckoutBranch).not.toHaveBeenCalled();
+      expect(mockPullUpdates).toHaveBeenCalledWith('/workspace', 'main-app');
     });
 
     it('should handle mixed repos with path "." and remote repos', async () => {
@@ -164,6 +169,7 @@ describe('orchestrate', () => {
       expect(result.repos[1].action).toBe('cloned');
       expect(result.skipped).toBe(1);
       expect(result.cloned).toBe(1);
+      expect(mockPullUpdates).toHaveBeenCalledWith('/workspace', 'main-app');
     });
   });
 
@@ -206,6 +212,7 @@ describe('orchestrate', () => {
       expect(result.success).toBe(true);
       expect(result.repos[0].action).toBe('up-to-date');
       expect(result.skipped).toBe(1);
+      expect(mockPullUpdates).toHaveBeenCalledWith('/workspace/repos/service', 'service');
     });
   });
 });

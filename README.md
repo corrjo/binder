@@ -47,7 +47,7 @@ Options:
 
 Commands:
   init               Create a new binder.yaml configuration file
-  pull               Clone missing repositories and checkout configured branches
+  pull               Clone missing repositories, pull updates, and checkout configured branches
   context [options]  Generate CONTEXT_MAP.md for AI agents
   status             Show workspace status (repos, branches, dirty state)
   help [command]     display help for command
@@ -59,7 +59,7 @@ Creates a new `binder.yaml` configuration file with a commented template.
 
 ### `binder pull`
 
-Clones missing repositories and checks out configured branches. This command is idempotent - safe to run multiple times.
+Clones missing repositories, checks out configured branches, and pulls updates for existing repositories. Clean repositories are updated; repositories with uncommitted changes are reported as errors. This command is idempotent - safe to run multiple times.
 
 ### `binder context`
 
