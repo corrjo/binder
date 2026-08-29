@@ -1,3 +1,15 @@
+# [1.3.0](https://github.com/corrjo/binder/compare/v1.2.5...v1.3.0) (2026-08-29)
+
+
+### Bug Fixes
+
+* upgrade Node.js to 22 in release workflow to support npm@latest ([a141376](https://github.com/corrjo/binder/commit/a141376ccafa53283f32c967bdaa4f81c4336f53))
+
+
+### Features
+
+* pull now updates ([7f507a5](https://github.com/corrjo/binder/commit/7f507a54046e4aac04ef50fffdc9de2cc6da70b7))
+
 ## [1.2.5](https://github.com/corrjo/binder/compare/v1.2.4...v1.2.5) (2026-01-03)
 
 
